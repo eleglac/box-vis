@@ -1,0 +1,102 @@
+#error {
+ :cause EOF while reading, starting at line 9
+ :via
+ [{:type clojure.lang.Compiler$CompilerException
+   :message java.lang.RuntimeException: EOF while reading, starting at line 9, compiling:(box_vis/options.clj:62:1)
+   :at [clojure.lang.Compiler load Compiler.java 7386]}
+  {:type java.lang.RuntimeException
+   :message EOF while reading, starting at line 9
+   :at [clojure.lang.Util runtimeException Util.java 221]}]
+ :trace
+ [[clojure.lang.Util runtimeException Util.java 221]
+  [clojure.lang.LispReader readDelimitedList LispReader.java 1206]
+  [clojure.lang.LispReader$ListReader invoke LispReader.java 1049]
+  [clojure.lang.LispReader read LispReader.java 263]
+  [clojure.lang.LispReader read LispReader.java 196]
+  [clojure.lang.Compiler load Compiler.java 7374]
+  [clojure.lang.RT loadResourceScript RT.java 372]
+  [clojure.lang.RT loadResourceScript RT.java 363]
+  [clojure.lang.RT load RT.java 453]
+  [clojure.lang.RT load RT.java 419]
+  [clojure.core$load$fn__5677 invoke core.clj 5893]
+  [clojure.core$load invokeStatic core.clj 5892]
+  [clojure.core$load doInvoke core.clj 5876]
+  [clojure.lang.RestFn invoke RestFn.java 408]
+  [clojure.core$load_one invokeStatic core.clj 5697]
+  [clojure.core$load_one invoke core.clj 5692]
+  [clojure.core$load_lib$fn__5626 invoke core.clj 5737]
+  [clojure.core$load_lib invokeStatic core.clj 5736]
+  [clojure.core$load_lib doInvoke core.clj 5717]
+  [clojure.lang.RestFn applyTo RestFn.java 142]
+  [clojure.core$apply invokeStatic core.clj 648]
+  [clojure.core$load_libs invokeStatic core.clj 5774]
+  [clojure.core$load_libs doInvoke core.clj 5758]
+  [clojure.lang.RestFn applyTo RestFn.java 137]
+  [clojure.core$apply invokeStatic core.clj 648]
+  [clojure.core$require invokeStatic core.clj 5796]
+  [clojure.core$require doInvoke core.clj 5796]
+  [clojure.lang.RestFn invoke RestFn.java 457]
+  [box_vis.core$eval14$loading__5569__auto____15 invoke core.clj 1]
+  [box_vis.core$eval14 invokeStatic core.clj 1]
+  [box_vis.core$eval14 invoke core.clj 1]
+  [clojure.lang.Compiler eval Compiler.java 6927]
+  [clojure.lang.Compiler eval Compiler.java 6916]
+  [clojure.lang.Compiler load Compiler.java 7379]
+  [clojure.lang.RT loadResourceScript RT.java 372]
+  [clojure.lang.RT loadResourceScript RT.java 363]
+  [clojure.lang.RT load RT.java 453]
+  [clojure.lang.RT load RT.java 419]
+  [clojure.core$load$fn__5677 invoke core.clj 5893]
+  [clojure.core$load invokeStatic core.clj 5892]
+  [clojure.core$load doInvoke core.clj 5876]
+  [clojure.lang.RestFn invoke RestFn.java 408]
+  [clojure.core$load_one invokeStatic core.clj 5697]
+  [clojure.core$load_one invoke core.clj 5692]
+  [clojure.core$load_lib$fn__5626 invoke core.clj 5737]
+  [clojure.core$load_lib invokeStatic core.clj 5736]
+  [clojure.core$load_lib doInvoke core.clj 5717]
+  [clojure.lang.RestFn applyTo RestFn.java 142]
+  [clojure.core$apply invokeStatic core.clj 648]
+  [clojure.core$load_libs invokeStatic core.clj 5774]
+  [clojure.core$load_libs doInvoke core.clj 5758]
+  [clojure.lang.RestFn applyTo RestFn.java 137]
+  [clojure.core$apply invokeStatic core.clj 648]
+  [clojure.core$require invokeStatic core.clj 5796]
+  [clojure.core$require doInvoke core.clj 5796]
+  [clojure.lang.RestFn invoke RestFn.java 408]
+  [user$eval5 invokeStatic form-init4628511797760062852.clj 1]
+  [user$eval5 invoke form-init4628511797760062852.clj 1]
+  [clojure.lang.Compiler eval Compiler.java 6927]
+  [clojure.lang.Compiler eval Compiler.java 6916]
+  [clojure.lang.Compiler eval Compiler.java 6916]
+  [clojure.lang.Compiler load Compiler.java 7379]
+  [clojure.lang.Compiler loadFile Compiler.java 7317]
+  [clojure.main$load_script invokeStatic main.clj 275]
+  [clojure.main$init_opt invokeStatic main.clj 277]
+  [clojure.main$init_opt invoke main.clj 277]
+  [clojure.main$initialize invokeStatic main.clj 308]
+  [clojure.main$null_opt invokeStatic main.clj 342]
+  [clojure.main$null_opt invoke main.clj 339]
+  [clojure.main$main invokeStatic main.clj 421]
+  [clojure.main$main doInvoke main.clj 384]
+  [clojure.lang.RestFn invoke RestFn.java 421]
+  [clojure.lang.Var invoke Var.java 383]
+  [clojure.lang.AFn applyToHelper AFn.java 156]
+  [clojure.lang.Var applyTo Var.java 700]
+  [clojure.main main main.java 37]]}
+nREPL server started on port 43651 on host 127.0.0.1 - nrepl://127.0.0.1:43651
+REPL-y 0.4.3, nREPL 0.6.0
+Clojure 1.8.0
+Java HotSpot(TM) 64-Bit Server VM 1.8.0_181-b13
+    Docs: (doc function-name-here)
+          (find-doc "part-of-name-here")
+  Source: (source function-name-here)
+ Javadoc: (javadoc java-object-or-class-here)
+    Exit: Control+D or (exit) or (quit)
+ Results: Stored in vars *1, *2, *3, an exception in *e
+
+box-vis.core=> ok
+
+box-vis.core=> 
+
+box-vis.core=> Bye for now!
