@@ -9,7 +9,7 @@ TODOs (in reverse order):
 
 At the moment, it's best run from a repl:
 
-`code` (apply q/sketch sketch-settings)
+`(apply q/sketch sketch-settings)`
 
 ## License
 
