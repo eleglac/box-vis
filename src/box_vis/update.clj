@@ -2,7 +2,11 @@
   (:require [box-vis.derive :refer :all]
             [box-vis.options :refer :all]
             
-            [com.rpl.specter :refer :all] ))
+            [com.rpl.specter :refer :all] 
+            
+            [quil.core :as q :include-macros true]
+            ))
+
 
 (defn update-exps-state
   "Update state relating to option expirations data"

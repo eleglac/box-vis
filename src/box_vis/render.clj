@@ -1,8 +1,7 @@
 (ns box-vis.render
-  (:require 
+  (:require [com.rpl.specter :refer :all]
+            
             [quil.core :as q :include-macros true]
-            [quil.middleware :as m]
-            [com.rpl.specter :refer :all]
             ))
 
 (defn render-3d-polygon
