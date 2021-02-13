@@ -31,63 +31,67 @@
       (doseq [p rects] (render-3d-polygon p))
       (q/stroke-weight 1))))
 
-(defn render-mesh [mesh1d & opts]
+(defn render-mesh [mesh origin scale dimensions & opts]
   "Render a mesh created by create-mesh by traversing a 1d mesh array 
   in a particular way to create a nice triangle-strip-based surface."
-  ;; TODO: use opts to set rendering colors
+  ;; TODO: opts: rendering colors, full surface or just dots, z-key
+  ;; TODO: perhaps just pass in state map and destructure all needed keys? no (let...)
+  (let [[ox oy oz] origin
+        [x-dim y-dim z-dim] dimensions
+        [dx dy dz] scale
+        x-pad (/ dx 2)
+        y-pad (/ dy 2)
+        z-pad (/ dz 2)
+       
+        z-key :prevclose 
+        ]
 
-  (let [x-dim (mesh1d :x-dim)
-        y-dim (mesh1d :y-dim)
-        padding (/ (mesh1d :dx) 2)
-        mesh2d (partition x-dim (mesh1d :mesh))]
     (do
       ;; shift the mesh over a bit
       (q/push-matrix)
-      (q/translate padding padding padding)
+      (q/translate ox oy oz)
+      (q/translate x-pad y-pad z-pad)
       
       ;; render the actual vertices as colored dots
-      (q/stroke 0 100 100 100)
-      (q/stroke-weight 3)
-      (doseq [v (mesh1d :mesh)] (apply q/point v))
-      (q/stroke-weight 1)
+      ;(q/stroke 0 100 100 100)
+      ;(q/stroke-weight 3)
+      ;(doseq [v (mesh1d :mesh)] (apply q/point v))
+      ;(q/stroke-weight 1)
 
       ;; prepare to render the triangle-strip
       (q/no-stroke)
       (q/fill 0 100 100 10)
       (q/begin-shape :triangle-strip)
-      (loop [x-offset 0 y-offset 0] ;; begin rendering strip
-        (cond
-          (= y-offset (dec y-dim)) ;; if we've reached the last row of verts
-          (do 
-            (q/end-shape) 
-            (q/pop-matrix))           ;; we're done 
 
-          (= x-offset (dec x-dim)) ;; if we've reached the last column of verts
+      (loop [col 0 row 0] ;; begin rendering strip
+        (cond
+          (= row (dec y-dim)) ;; if we've reached the last row of verts, we're done
+          (do (q/end-shape) (q/pop-matrix))
+
+          (= col (dec x-dim)) ;; if we've reached the last column of verts
           (do                      ;; finish up the last triangle and reset for the next row
-            (apply q/vertex (-> mesh2d (nth      y-offset)  (nth x-offset)))
-            (apply q/vertex (-> mesh2d (nth (inc y-offset)) (nth x-offset)))
+            (q/vertex (* dx      col)  (* dy      row)  (-> mesh (nth      row)  (nth      col) z-key))
+            (q/vertex (* dx      col)  (* dy (inc row)) (-> mesh (nth (inc row)) (nth      col) z-key))
             (q/end-shape) ;; avoid extra triangle connecting end of one strip
             (q/begin-shape :triangle-strip) ;; to beginning of next strip
-            (recur
-              0
-              (inc y-offset)))
+            (recur 0 (inc row)))
 
           :else ;; if we're neither at the end of the columns or rows,
           (do   ;; render a set of verts and move on to the next set
-            (apply q/vertex (-> mesh2d (nth      y-offset)  (nth      x-offset)))
-            (apply q/vertex (-> mesh2d (nth (inc y-offset)) (nth      x-offset)))
-            (apply q/vertex (-> mesh2d (nth (inc y-offset)) (nth (inc x-offset))))
-            (apply q/vertex (-> mesh2d (nth      y-offset)  (nth      x-offset)))
-            (recur
-              (inc x-offset)
-              y-offset)))
+            (q/vertex (* dx      col)  (* dy      row)  (-> mesh (nth      row)  (nth      col) z-key))
+            (q/vertex (* dx      col)  (* dy (inc row)) (-> mesh (nth (inc row)) (nth      col) z-key))
+            (q/vertex (* dx (inc col)) (* dy (inc row)) (-> mesh (nth (inc row)) (nth (inc col) z-key)))
+            (q/vertex (* dx      col)  (* dy      row)  (-> mesh (nth      row)  (nth      col) z-key))
+            (recur (inc col) row)))
         ))))
+
+;; TODO continue rewrite from here 02-12-2021
 
 (defn render-labels
   "Wrapper function for graph label display."
-  [x-labels y-labels z-labels spacing & opts]
+  [x-labels y-labels z-labels scale & opts]
 
-  (let [
+  (let [[dx dy dz] scale
         x-max (* spacing (count x-labels)) 
         y-max (* spacing (count y-labels))
         z-max (* spacing (count z-labels))
@@ -237,27 +241,6 @@
       state
     )
   )
-
-;(defn create-mesh [x-dim y-dim dx dy & zs] 
-  ;"creates a map representing a heightmap mesh with size metadata.
-   ;1. x-dim and y-dim are the number of rows and columns; z will be height
-   ;2. dx and dy represent spacing between coordinates in each direction
-   ;3. zs represents a y*x matrix (y rows, x cols) of z-heights.
-      ;if not provided, a constant value of 100 will be used."
-  
-    ;{:x-dim x-dim :dx dx
-     ;:y-dim y-dim :dy dy
-     ;:z-range (if zs
-                ;(let [nzs (normalize zs 300)] [(min nzs) (max nzs)]) ; redundant...?
-                ;[0 300]) 
-     ;:mesh (for [y (range y-dim)
-                 ;x (range x-dim)]
-             ;(if zs
-               ;[(* x dx) (* y dy) (-> zs (nth y) (nth x))]
-               ;[(* x dx) (* y dy) 100]))
-     ;})
-
-;; TODO finish mesh creator
 
 (defn update-mesh-state
   [{:keys [put-mesh-data call-mesh-data spacing] :as state}]

@@ -62,5 +62,5 @@
 (defn parse-chain [chain-promise]
   (select [:options :option ALL] (json/parse-string @chain-promise true)))
 
-(defn get-mesh-data [chain]
-  (select [ALL submap mesh-columns] chain))
+(defn get-full-chain [chain-promises]
+  (map parse-chain chain-promises))

@@ -37,7 +37,8 @@ Each family of variables will have associated rendering and updating functions.
 
 The app will eventually be ported to Clojurescript and hosted at stonks.expert.
 
-Options request data will be cached so I won't be hitting the Tradier API more than I have to.
+Options request data will be cached so I won't be hitting the Tradier API more than I have to.  NB: currently the request would not be made from the server I control, but directly from the client browser, meaning MY credentials are exposed! Superbad! Alternatives either to either proxy all requests through my server or to force all users to get their own Tradier credentials
+
 
 ## Decisionmaking
 - Since it's intended as a data visualization, I originally considered using something like Om, but a brief investigation convinced me that there's not much out there for 3D visualizations and Quil is already somewhat familiar so that's what I went with.
