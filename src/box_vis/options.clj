@@ -1,8 +1,8 @@
 (ns box-vis.options
-  (:require [org.httpkit.client :as http]
+  (:require 
             [cheshire.core :as json]
             [com.rpl.specter :refer :all]
-            
+            [org.httpkit.client :as http] 
             )
   )
 
