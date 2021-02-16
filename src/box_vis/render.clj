@@ -53,7 +53,8 @@
        (q/translate ox oy oz)
        (q/translate x-pad y-pad z-pad)
 
-       ; render the actual vertices as colored dots
+       ;; render the actual vertices as colored dots
+       ;; TODO: add colored lines?
        (q/stroke h s b 100)
        (q/stroke-weight 3)
        (doseq [row (range y-dim) col (range x-dim)] 

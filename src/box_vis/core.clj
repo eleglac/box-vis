@@ -55,8 +55,6 @@
 
   (apply q/camera (flatten [camera-location camera-focus camera-axis])) 
   
-  ; probably should render some boundary planes for the visbox
-  ; TODO dynamic box size depending on actual data
   (q/stroke 33 100 50 100)
   (q/stroke-weight 2)
   (q/fill 0 100 100 100)
